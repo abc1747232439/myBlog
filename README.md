@@ -1,9 +1,11 @@
 ## 前言
-
-## 后端方面
-页面详情[漆黑之牙 (llongjie.top)](https://llongjie.top/)
+页面详情漆黑之牙 (llongjie.top)
 
 技术栈:Vue2.0+Vue-router++VueX+Koa2+Sequelize
+本项目覆盖前后端相关配置及库的使用
+而且代码也都不难，作为新人练手项目是完全可以
+
+## 后端方面
 
 ### 一、数据库
 
