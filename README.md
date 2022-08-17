@@ -1,6 +1,6 @@
 ## 前言
 
-页面详情漆黑之牙 (llongjie.top)
+页面详情http://www.appself.top/
 
 技术栈:Vue2.0+Vue-router++VueX+Koa2+Sequelize
 本项目覆盖前后端相关配置及库的使用
