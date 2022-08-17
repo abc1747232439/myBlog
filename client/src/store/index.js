@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state:{
         isToken:!!localStorage.getItem('token'), //有没有token，！！是为了把得到的值强制转换为布尔值
-        showPageLoadScrollBar:false
+        showPageLoadScrollBar:false,
+        important:false  //用户是否已注册
     },
     actions:{
         clearToken({commit}){
@@ -33,6 +34,9 @@ export default new Vuex.Store({
         },
         setShowPageLoadScrollBar(state,data){
             state.showPageLoadScrollBar = data
+        },
+        setImportant(state,data){
+            state.important = data
         }
     }
 })

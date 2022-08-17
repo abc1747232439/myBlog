@@ -4,6 +4,7 @@
         <div class="content-wrap">
             <Article :datas='requestDatas' :isLoading="isLoading" :isNext="isNext" />
         </div>
+        <el-backtop></el-backtop>
     </div>
 </template>
 

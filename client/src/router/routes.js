@@ -56,6 +56,14 @@ export default [
       }
     },
     {
+      path: "/update",
+      name: "Update",
+      component: () => import(/* webpackChunkName: "update" */ "../views/Update"),
+      meta: {
+        title: 'Update | 漆黑之牙'
+      }
+    },
+    {
       path: '/detail/:id',
       name: 'Detail',
       props:true,

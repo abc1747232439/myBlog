@@ -1,6 +1,8 @@
 <template>
-  <div class="flex flex-column align-center">
-    <Header :like="true" :isLike="detail.isLike" @like="likeChange"></Header>
+  <div class="wrap">
+    <div class="flex flex-column align-center">
+    <Header :like="important&&true" :isLike="detail.isLike" @like="likeChange"></Header>
+    <el-backtop></el-backtop>
     <div class="detail">
         <h1 class="title">{{detail.title}}</h1>
         <div class="status flex align-center">
@@ -14,11 +16,15 @@
             <div v-html="content" v-highlight></div>
         </div>
         <div id="hash">
-            <messageInput @comment="comment" :rows="rows" :aiteName="aiteName" @tagClose="tagClose"></messageInput>
+            <messageInput @comment="comment" :rows="rows" :aiteName="aiteName" @tagClose="tagClose" v-if="important"></messageInput>
+            <div v-else class="block">
+                <router-link to="{name:'/login'}">登录</router-link>或<router-link to="{name:'/login'}">注册</router-link> 发表评论
+            </div>
             <messageList @reply="reply" :lists="commentList" :isLoading="isLoading" :isNext="isNext"></messageList>
         </div>
     </div>
 </div>
+  </div>
 </template>
 
 <script>
@@ -27,6 +33,7 @@ import "highlight.js/styles/monokai-sublime.css";
 import { add, list } from "@/api/articleWord"
 import { detail, setLike } from "@/api/article";
 import { bottomHandle } from '@/utils'
+import { mapState } from "vuex";
 import messageInput from "./components/messageInput.vue";
 import messageList from "./components/messageList.vue";
 
@@ -37,6 +44,7 @@ export default {
         messageInput,
         messageList
     },
+    computed:mapState(['important']),
     data(){
         return {
             detail:{},
@@ -58,10 +66,10 @@ export default {
         await this.markdownRender() // markdown 加载
     },
      mounted() {
-         this.getComData()
+         this.getComData()         
          bottomHandle(this.isNext,()=>{
               this.isLoading = true
-              this.page.pageSize += 10
+              this.page.pageNum += 1
               this.getComData()
          })
     },
@@ -151,8 +159,16 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.flex {
-    background:radial-gradient(ellipse at center, rgba(255,254,234,1) 0%, rgba(255,254,234,1) 35%, #B7E8EB 100%);
+.wrap {
+    background-color: #fff;
+       background-size: 10px 10px;
+       background-image: linear-gradient(
+      90deg,
+      #eef1f4 10%,
+      transparent 10%
+    ),
+    linear-gradient(#eef1f4 10%, transparent 10%);
+    height: 100vh;
 }
     .detail {
         width: 800px;
@@ -186,6 +202,11 @@ export default {
         }
         #hash {
             margin-bottom: 100px;
+            .block {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
         }
     }
     @media screen and (max-width: 800px) {

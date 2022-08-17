@@ -70,10 +70,10 @@ export default {
             this.captcha = `${this.mainUrl}/captcha?code=${Math.random()}`
         },
          landing ({account, password}) {
-            console.log(account,password);
             login(account, password).then( async res => {
                 localStorage.setItem('token', res.data.data)
                 this.$store.commit("setIsToken", true)
+                this.$store.commit('setImportant',true)
                 this.$message.success('登陆成功, 1秒后即将返回首页')
                 const result = await whoami()
                 localStorage.setItem('userInfo', JSON.stringify(result.data.data))
@@ -88,6 +88,7 @@ export default {
              data.id = JSON.parse(localStorage.getItem('userInfo')).id
                 registry(data).then(res => {
                     this.$message.success('注册成功')
+                    this.$store.commit('setImportant',true)
                     this.toggle(1)
                 })
             },

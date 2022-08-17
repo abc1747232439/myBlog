@@ -1,10 +1,12 @@
 <template>
-  <div class="flex flex-column align-center" v-loading.fullscreen.lock="pageLoad">
+  <div class="wrap">
+    <div class="flex flex-column align-center" v-loading.fullscreen.lock="pageLoad">
     <Header></Header>
     <div class="content">
       <MessageInput @comment="comment" :rows="5" :hiddenOuter="true" v-if="!pageLoad" />
       <MessageList :datas="commentList" :isLoading="isLoading" :pageLoad="pageLoad" :isNext="isNext" />
     </div>
+  </div>
   </div>
 </template>
 
@@ -13,6 +15,7 @@ import MessageInput from '../ArticleList/components/messageInput'
 import MessageList from "./components/messageList"
 import { add, list } from '@/api/myWord'
 import { bottomHandle, clearBottomHandle } from '@/utils'
+
 export default {
   components: { MessageInput, MessageList },
   data () {
@@ -32,7 +35,7 @@ export default {
     this.getComData()
   },
   activated () {
-    bottomHandle(()=> this.isNext, () => {
+    bottomHandle(this.isNext, () => {
       this.page.pageNum += 1
       this.getComData()
     })
@@ -82,6 +85,19 @@ export default {
 </script>
 
 <style lang="less" scoped>
+/* --cursor-1-bg: #ffffff;
+--cursor-1-bg-line: #eef1f4; */
+   .wrap {
+       height: 100vh;
+       background-color: #fff;
+       background-size: 10px 10px;
+       background-image: linear-gradient(
+      90deg,
+      #eef1f4 10%,
+      transparent 10%
+    ),
+    linear-gradient(#eef1f4 10%, transparent 10%);
+   }
    .content {
     width: 800px;
     padding: 90px 0 0;

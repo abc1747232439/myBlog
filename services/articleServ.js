@@ -101,7 +101,7 @@ exports.getArtDetail = async(id,userId,ctx)=>{
           }]
     })
     if(!result) return result
-    result.increment("visitNum",{by:1})  //让该字段递增，若为1可忽略by
+    result.increment("visitsNum",{by:1})  //让该字段递增，若为1可忽略by
     result = result.toJSON()
     handleData(result)
     return result

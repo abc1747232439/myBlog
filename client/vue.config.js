@@ -48,7 +48,6 @@ module.exports = {
       return args
     })
   },
-
   configureWebpack: (config) => {
     // 配置解析别名
     config.resolve = { 
@@ -60,6 +59,8 @@ module.exports = {
         '@c': path.resolve(__dirname, './src/components'),
       }
     }
+    
+      
     if (isProduction) {
       // 不打包这些资源
       config.externals = cdn.externals
@@ -109,8 +110,10 @@ module.exports = {
         deleteOriginalAssets: isProduction
       }))
       // config.plugins.push(new BundleAnalyzerPlugin()) // 是否查看构建后的信息
+      
     }
   },
+  
   // 生产环境是否生成 sourceMap 文件
   productionSourceMap: false,
   // css相关配置

@@ -12,7 +12,7 @@
   <section>
     <h1 class="title">Welcome to My Blog</h1>
     <transition name="el-fade-in-linear" appear>
-          <div  class="tipsText">请向下滚动</div>
+          <div  class="tipsText" v-if="appear">请向下滚动</div>
      </transition>
   </section>
 </main>
@@ -21,12 +21,23 @@
 <script>
 export default {
     name: 'giantScreen',
+    mounted() {
+      window.addEventListener('scroll',()=>{
+          this.appear = false
+      })
+    },
+    data(){
+        return {
+            appear:true
+        }
+    }
 }
 </script>
 
 <style lang="less" scoped>
 @total-slides: 4;
 @interval: 6s;
+
 main {
     width: 100vw;
     height: 100vh;
@@ -123,7 +134,7 @@ main {
       rgba(16, 16, 16, 0.3),
       rgba(16, 16, 16, 0.3)
     ),
-    url('../../assets/img/preview.jpg');
+    url('http://www.appself.top/Bg/preview.jpg');
 }
 
 #slide2 {
@@ -131,21 +142,21 @@ main {
       rgba(16, 16, 16, 0.3),
       rgba(16, 16, 16, 0.3)
     ),
-    url("../../assets/img/preview1.jpg");
+    url("http://appself.top/Bg/preview1.jpg");
 }
 #slide3 {
   background-image: linear-gradient(
       rgba(16, 16, 16, 0.3),
       rgba(16, 16, 16, 0.3)
     ),
-    url("../../assets/img/preview2.jpg");
+    url("http://appself.top/Bg/preview2.jpg");
 }
 #slide4 {
   background-image: linear-gradient(
       rgba(16, 16, 16, 0.3),
       rgba(16, 16, 16, 0.3)
     ),
-    url("../../assets/img/preview3.jpg");
+    url("http://appself.top/Bg/preview3.jpg");
 }
 
 @keyframes kenburns {

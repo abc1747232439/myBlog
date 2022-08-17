@@ -2,6 +2,7 @@
   <div class="bg">
     <div class="flex flex-column align-center" v-loading.fullscreen.lock="pageLoad">
      <Header></Header>
+     <el-backtop></el-backtop>
      <div class="list">
         <ul class="monUl" v-for="(item,index) in requestDatas" :key="index">
             <li class="monTitle">{{item[0].month}},{{item[0].year}}</li>
@@ -84,7 +85,14 @@ export default {
 <style  lang="less" scoped>
     .bg {
        height: 100vh;
-        background:radial-gradient(ellipse at center, rgba(255,254,234,1) 0%, rgba(255,254,234,1) 35%, #B7E8EB 100%);
+        background-color: #fff;
+       background-size: 10px 10px;
+       background-image: linear-gradient(
+      90deg,
+      #eef1f4 10%,
+      transparent 10%
+    ),
+    linear-gradient(#eef1f4 10%, transparent 10%);
         overflow: hidden;
     }
     .list {

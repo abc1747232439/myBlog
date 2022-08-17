@@ -2,7 +2,7 @@
   <div id="app">
     <pageLoadScrollBar></pageLoadScrollBar>
     <transition class="change" name="fade" mode="out-in" appear>
-      <keep-alive :exclude="['detail']">
+      <keep-alive :exclude="['detail','articleList']">
         <router-view/>
       </keep-alive>
     </transition>

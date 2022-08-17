@@ -17,6 +17,7 @@ export default {
   async created(){
       if(!localStorage.getItem('userInfo')){ // 如果用户进入首页没有用户信息，就去注册
           const result = await addUser({account:Date.now()})
+          this.$store.commit('setImportant',false)
           localStorage.setItem('userInfo',JSON.stringify(result.data.data))
       }
   }

@@ -27,10 +27,10 @@
             <div class="el-upload__text" v-if="!imgUrl">封面图片 (680*440)</div>
         </el-upload>
     </div>
-    <Markdown @contentChange="contentChange" style="height:400px"></Markdown>
     <div class="submit flex align-center" v-if="userInfo.id===1">
         <el-button type="primary" icon="el-icon-position" class="subBtn" @click="addArticle">发布</el-button>
     </div>
+    <Markdown @contentChange="contentChange" style="height:400px"></Markdown>
   </div>
 </template>
 

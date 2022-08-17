@@ -3,7 +3,7 @@ module.exports = {
     localDb:{
         database:"blog",  /* 本地 */
         username:"root",
-        password:"12345",
+        password:"wzj12345",
         host:{
             host:"localhost",
             dialect:"mysql",
@@ -12,11 +12,11 @@ module.exports = {
         }
     },
     serverDb:{            /* 线上 */
-        database:"",
-        username:"",
-        password:"",
+        database:"blog",
+        username:"Blog",
+        password:"DkdFTPyHNScBsnXf",
         host:{
-            host:"localhost",
+            host:"appself.top",
             dialect:"mysql",
             timezone: '+08:00' ,
             logging:information

@@ -1,7 +1,8 @@
 ## 前言
 
 ## 后端方面
-页面详情[漆黑之牙 (llongjie.top)](https://llongjie.top/)
+
+页面详情[[漆黑月牙 (appself.top)](http://www.appself.top/)](https://llongjie.top/)
 
 技术栈:Vue2.0+Vue-router++VueX+Koa2+Sequelize
 
@@ -46,6 +47,18 @@
 
 本站使用Session实现了验证码以及评论留言限制功能能
 
+#### 3、日志相关
+
+本站所用日志库为koa-log4 以下为官方文档
+
+[log4js-node by log4js-node](https://log4js-node.github.io/log4js-node/layouts.html)
+
+#### 4.用户登录与鉴权
+
+使用JWT鉴权
+
+[(55条消息) JsonWebToken是什么？_liyinchi1988的博客-CSDN博客_jsonwebtoken](https://blog.csdn.net/u013302168/article/details/119490363)
+
 ## 前端方面
 
 ## 一、建议
@@ -58,7 +71,17 @@
 
 .env后缀文件必须先行创建，在写代码
 
+创建不同的.env环境文件，在其中设置相应的环境变量
+
+打包后会加载对应的env文件，将其中的环境变量载入
+
+可通过process.env.变量获取
+
 因为其定义了我们之后要用于发送的服务器域名
+
+写配置经常要用到path.resolve()
+
+[(55条消息) path.resolve()理解_kikyou`的博客-CSDN博客_path.resolve()](https://blog.csdn.net/kikyou_csdn/article/details/83150538)
 
 从难易度以及业务逻辑而言，前端应该先写后台，写好后才能发文章，才能在写前台时设置好样式
 
@@ -74,6 +97,64 @@
 
 比如加入Token，比如调用Element-ui显示服务器返回的msg
 
+#### 3.背景图片不显示问题
+
+若对webpack配置不熟悉，打包到服务器后无法显示
+
+可以使用Nginx部署静态资源服务器
+
+~~~
+location ^~ /Bg {
+    	root /front;
+        index  index.html;
+    }
+~~~
+
+对应请求发送并匹配到该Location后
+
+Nginx就会从Nginx所在磁盘寻找匹配后的urI映射的文件夹
+
+#### 4.CSS动画相关
+
+本站CSS特效分为两类
+
+1.Element-ui自带动画
+
+2.自己制作
+
+自己制作的动画，如登陆界面，先在CSS中定义好动画前与动画后盒子的状态
+
+不论是opacity还是translate
+
+然后再利用vue为需要进行动画效果的盒子添加删除一个辅助作用的CSS类
+
+即可完成动画效果
+
+#### 5.前台使用包介绍
+
+|      |                   |      |                         |      |      |                            |           |
+| ---- | ----------------- | ---- | ----------------------- | ---- | ---- | -------------------------- | --------- |
+|      |                   |      |                         |      |      |                            | 如-webkit |
+|      | 一、auto-prefixer |      | 为了考虑css属性的兼容性 |      |      | 通常要加上不同浏览器的前缀 |           |
+|      |                   |      |                         |      |      |                            |           |
+
+这个包放到项目里自动为你加
+
+|      |                  |      |              |      |                                      |      |                            |
+| ---- | ---------------- | ---- | ------------ | ---- | ------------------------------------ | ---- | -------------------------- |
+|      | 二、highlight.js |      | 代码高亮插件 |      | 网站发布的文章里有代码会让其高亮显示 |      | 就像是在vscode里的代码一样 |
+
+|      |               |      |                    |      |                                  |
+| ---- | ------------- | ---- | ------------------ | ---- | -------------------------------- |
+|      | 三、marked.js |      | MarkDown解析编译器 |      | 将markdown代码转为html代码并显示 |
+
+|      |                                                     |      |                    |      |            |
+| ---- | --------------------------------------------------- | ---- | ------------------ | ---- | ---------- |
+|      | 四、Parallax.js是一个**简单的，轻量级的**视差引擎。 |      | 五、postcss-px2rem |      | 移动端适配 |
+|      |                                                     |      |                    |      |            |
+
+六、wowjs   动画库
+
 ## 打包与部署
 
 ### 1.Nginx配置
@@ -81,28 +162,21 @@
 为什么是5008，因为我koa监听的是5008端口
 
 > 这里给出我的nginx配置
->
 
 ```
-user  root root;
 worker_processes auto;
-error_log  /www/logs/nginx_error.log  crit;
-pid        /www/server/nginx/logs/nginx.pid;
 worker_rlimit_nofile 51200;
 events
-    {
-        use epoll;
-        worker_connections 51200;
-        multi_accept on;
-    }
-
+{
+	worker_connections 51200;
+	multi_accept on;
+}
 http
     {
         include       mime.types;
         #include luawaf.conf;
 
-    # 设置缓存路径并且使用一块最大100M的共享内存，用于硬盘上的文件索引，包括文件名和请求次数，每个文件在1天内若不活跃（无请求）则从硬盘上淘汰，硬盘缓存最大10G，满了则根据LRU算法自动清除缓存。
-    proxy_cache_path /var/cache/nginx/cache levels=1:2 keys_zone=imgcache:100m inactive=1d max_size=10g;
+   
 
 	include proxy.conf;
 
@@ -156,27 +230,14 @@ http
     server_tokens off;
     access_log off;
 
-    # 是否启用在on-the-fly方式压缩文件，启用后，将会在响应时对文件进行压缩并返回。
-    brotli on;
-    # 启用后将会检查是否存在带有br扩展的预先压缩过的文件。如果值为always，则总是使用压缩过的文件，而不判断浏览器是否支持。
-    brotli_static always;
-    # 设置压缩质量等级。取值范围是0到11.
-    brotli_comp_level 6;
-    # 设置缓冲的数量和大小。大小默认为一个内存页的大小，也就是4k或者8k。
-    brotli_buffers 16 8k;
-    # 设置需要进行压缩的最小响应大小。
-    brotli_min_length 20;
-    # 指定对哪些内容编码类型进行压缩。text/html内容总是会被进行压缩
-    brotli_types text/plain application/json application/javascript application/x-javascript text/javascript text/css application/xml image/jpeg image/gif image/png video/mpeg audio/x-pn-realaudio audio/x-midi audio/basic audio/mpeg audio/ogg audio/* video/mp4;
 server {
     listen    80;
     # 您的域名
-    server_name xxxxxx.xxx; 
+    server_name appself.top; 
     location ^~ / {
-        proxy_cache imgcache;
         proxy_cache_key $scheme$proxy_host$uri$is_args$args;
         proxy_cache_valid  200 304 302 24h;   
-        proxy_pass http://www.域名:5008;
+        proxy_pass http://www.appself.top:5008;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;  
         proxy_set_header Host $http_host; 
@@ -191,8 +252,8 @@ server {
         }
         try_files $uri $uri/ $fallback_uri = 404;
     }
-    location ^~ /pc {
-        proxy_pass http://www.域名:5008/back;
+    location ^~ /back {
+        proxy_pass http://www.appself.top:5008/back;
         index index.htm index.html;
     }
 }
@@ -201,9 +262,63 @@ include /www/server/panel/vhost/nginx/*.conf;
 
 ```
 
+### 2.前端配置
+
+client/public/html
+
+~~~~
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="XXX，一名前端工程师，这是我的个人博客，网站文章随便写，想写啥写啥">
+    <meta name="keywords" content="个人博客,XXX,前端,技术,WEB,blog,BLOG,搭建博客,前端技术,VUE博客,XXX的博客">
+    <meta name="anthor" content="XXX，123456789@qq.com">
+    <meta name="robots" content="博客, 前端, blog, 个人博客, XXX, Yong,XXX的博客,web,VUE,React">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <!-- 使用CDN的CSS文件 -->
+    <% for (var i in htmlWebpackPlugin.options.cdn &&
+    htmlWebpackPlugin.options.cdn.css) { %>
+    <link
+            href="<%= htmlWebpackPlugin.options.cdn.css[i] %>"
+            rel="stylesheet"
+    />
+    <% } %>
+    <title>漆黑月牙</title>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+
+    <!-- 使用CDN的JS文件 -->
+    <% for (var i in htmlWebpackPlugin.options.cdn &&
+    htmlWebpackPlugin.options.cdn.js) { %>
+    <script src="<%= htmlWebpackPlugin.options.cdn.js[i] %>"></script>
+    <% } %>
+    <!-- 使用CDN的JS文件 -->
+  </body>
+</html>
+
+~~~~
+
+
+
 一切准备工作已就绪，可以把项目部署到服务器上了
 
 **执行 npm run build 命令分别打包前台和后台**
+
+### 3.本地部署
+
+先执行npm run sync
+
+再npm run start
+
+注意run start使用的是nodemon，需要提前安装
 
 ## 最后
 

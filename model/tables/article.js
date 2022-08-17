@@ -22,7 +22,7 @@ const Article = sequelize.define('article', {
         type: DataTypes.STRING
       },
       content: {
-        type: DataTypes.TEXT,
+        type: DataTypes.TEXT('long'),
         allowNull: false
       },
       description: {

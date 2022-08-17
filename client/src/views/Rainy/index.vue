@@ -1,6 +1,6 @@
 <template>
   <div class="rain">
-    <img class="rain-bg" src="https://efiles.oss-cn-shenzhen.aliyuncs.com/file/rain-bg.gif" draggable="false">
+    <img class="rain-bg" src="https://images.pexels.com/photos/11566128/pexels-photo-11566128.jpeg?auto=compress&cs=tinysrgb&w=150&lazy=load 150w, https://images.pexels.com/photos/11566128/pexels-photo-11566128.jpeg?auto=compress&cs=tinysrgb&w=300&lazy=load 300w, https://images.pexels.com/photos/11566128/pexels-photo-11566128.jpeg?auto=compress&cs=tinysrgb&w=400&lazy=load 400w, https://images.pexels.com/photos/11566128/pexels-photo-11566128.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load 600w, https://images.pexels.com/photos/11566128/pexels-photo-11566128.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load 800w, https://images.pexels.com/photos/11566128/pexels-photo-11566128.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load 1200w, https://images.pexels.com/photos/11566128/pexels-photo-11566128.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load 1600w" draggable="false">
     <img class="words" src="@img/rain/words.png" draggable="false">
     <div class="header flex">
          <router-link :to="{name: 'Home'}" tag="div" class="icon" ><i class="el-icon-s-unfold"></i></router-link>
@@ -27,27 +27,27 @@ export default {
            audioDom:[],                                                                                                                  
            rainIcon: [
                 {
-                    on: require('@img/rain/rain_on.png'),
-                    off: require('@img/rain/rain_off.png'),
-                    music: 'https://efiles.oss-cn-shenzhen.aliyuncs.com/file/thunder.mp3',
+                    on: require('@img/rain/rain_off.png'),//off与on相反的原因 放在页面上由于背景的原因会导致不清晰
+                    off: require('@img/rain/rain_on.png'),
+                    music: 'https://downsc.chinaz.net/Files/DownLoad/sound1/202207/y1046.mp3',
                     active: false
                 },
                 {
-                    on: require('@img/rain/rain2_on.png'),
-                    off: require('@img/rain/rain2_off.png'),
-                    music: 'https://efiles.oss-cn-shenzhen.aliyuncs.com/file/loudThunder.mp3',
+                    on: require('@img/rain/rain2_off.png'),
+                    off: require('@img/rain/rain2_on.png'),
+                    music: 'https://downsc.chinaz.net/Files/DownLoad/sound1/201904/11461.mp3',
                     active: false
                 },
                 {
-                    on: require('@img/rain/rain3_on.png'),
-                    off: require('@img/rain/rain3_off.png'),
-                    music: 'https://efiles.oss-cn-shenzhen.aliyuncs.com/file/rain.mp3',
+                    on: require('@img/rain/rain3_off.png'),
+                    off: require('@img/rain/rain3_on.png'),
+                    music: 'https://downsc.chinaz.net/Files/DownLoad/sound1/202207/y1015.mp3',
                     active: false
                 },
                 {
-                    on: require('@img/rain/rain4_on.png'),
-                    off: require('@img/rain/rain4_off.png'),
-                    music: 'https://efiles.oss-cn-shenzhen.aliyuncs.com/file/bizhibian.mp3',
+                    on: require('@img/rain/rain4_off.png'),
+                    off: require('@img/rain/rain4_on.png'),
+                    music: 'https://www.xzmp3.com/down/010aca74b8ba.mp3',
                     active: false
                 }
             ], 

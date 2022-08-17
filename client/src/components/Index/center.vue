@@ -43,30 +43,39 @@
 
 <script>
 import { mapState } from "vuex";
+import { addUser } from "@/api/user"
+
 export default {
     name:'center',
     computed:mapState(['isToken']),
     data(){
         return {
             navigation:[
-                { name:' 主页',icon:'iconfont el-icon-s-home', path:'/exhibit' },
+                { name:' 主页',icon:'el-icon-s-home', path:'/exhibit' },
                 { name:' 文章列表',icon:'el-icon-tickets', path:'/articleList' },
                 { name:' 听雨',icon:'el-icon-light-rain', path:'/Rainy' },
                 { name:' 关于我',icon:'el-icon-user-solid', path:'/self' },
                 { name:' 留言版',icon:'el-icon-reading', path:'/message' },
-                { name:' Github',icon:'iconfont icon-github', path:'https://github.com/abc1747232439' },
+                { name:' Github',icon:'iconfont icon-github', path:'https://github.com/abc1747232439/myBlog' },
                 {name:' 更新日志',icon:'el-icon-document-remove',path:'/update'}
             ]
         }
     },
     methods:{
         triggerPage(path){
-            if(path === 'https://github.com/abc1747232439'){
+            if(path === 'https://github.com/abc1747232439/myBlog'){
                 window.open(path)
             }else if(path==='/loginoff') {
                 this.$store.dispatch('clearToken')
                 localStorage.removeItem("userInfo")
+                this.$store.commit('setImportant',false)
                 this.$message.success("注销成功");
+                 addUser({account:Date.now()}).then((result)=>{
+                  this.$store.commit('setImportant',false)
+                  localStorage.setItem('userInfo',JSON.stringify(result.data.data))
+                 }).catch((e)=>{
+                      
+                 })
             }else {
                 this.$router.push(path)
             }

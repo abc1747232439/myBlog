@@ -16,7 +16,7 @@ exports.addUser = async (data)=>{
         defaults:{...data}     //如果找到了，就不用管
    })
    if(!created) return;
-   const avatarSrc = `https://efiles.oss-cn-shenzhen.aliyuncs.com/file/avatar${getRandom(1, 9)}.jpg`
+   const avatarSrc = `https://img.zcool.cn/community/01786557e4a6fa0000018c1bf080ca.png@1280w_1l_2o_100sh"`
       result.avatar = avatarSrc
       result.save()
    return result.toJSON()

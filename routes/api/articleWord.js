@@ -13,7 +13,6 @@ articleWord.post("/addComment",async ctx=>{
 articleWord.post("/getArtComList",async ctx=>{
     const {pageSize=10,pageNum=1,articleId} = ctx.request.body
     const result = await artWordServ.getCommentList(pageNum,pageSize,articleId)
-    console.log(result);
     apiHandle(ctx,result,"获取评论列表失败,刷新一下试试~~")
 })
 

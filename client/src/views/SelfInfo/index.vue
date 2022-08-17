@@ -6,7 +6,7 @@
     </div>
     <ul>
             <li>
-                <a href="https://github.com/abc1747232439"><i class="iconfont icon-github"></i></a>
+                <a href="https://github.com/abc1747232439/myBlog"><i class="iconfont icon-github"></i></a>
             </li>
             <li>
                 <a href="https://www.zhihu.com/people/xue-hai-qiu-sheng-18"><i class="iconfont icon-zhihu-circle-fill" id="zhihu"></i></a>
@@ -17,10 +17,11 @@
 
 <script>
 import { getAboutMe } from "@/api/user";
+
 export default {
   data(){
       return {
-          content:""
+          content:"",
       }
   },
   created(){
@@ -38,13 +39,13 @@ export default {
 <style lang="less" scoped>
 @blur: 20px;
 @shadow-opacity: 0.30;
-@image: '../../assets/img/selfbg.jpg';
+@image: 'http://www.appself.top/Bg/selfbg.jpg';
 
 .wrap {
     width: 100vw;
     height: 100vh;
     align-items: center;
-    background-image: url(@image);
+    background: url(@image);
     background-size: cover;
     background-position: center;
     font-family: 'Rajdhani', sans-serif;
