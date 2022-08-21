@@ -51,6 +51,8 @@ export default {
         width: 100%;
         border-bottom: 2px solid #fff;
         z-index: 999;
+        background-color: #3399cc;
+        border-radius: 30%;
         .left {
             font-size: 20px;
             cursor: pointer;

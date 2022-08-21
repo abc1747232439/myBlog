@@ -1,29 +1,29 @@
 <template>
   <div class="wrap">
     <div class="flex flex-column align-center">
-    <Header :like="important&&true" :isLike="detail.isLike" @like="likeChange"></Header>
-    <el-backtop></el-backtop>
-    <div class="detail">
-        <h1 class="title">{{detail.title}}</h1>
-        <div class="status flex align-center">
-            <span>{{detail.month}} {{detail.day}}, {{detail.year}}</span>
-            <span>阅读：{{detail.visitsNum}}</span>
-            <span>字数：{{detail.textLen}}</span>
-            <span>评论：{{commentList.total}}</span>
-            <span>喜欢: {{detail.likeNum}}</span>
-        </div>
-        <div class="content markdown-body">
-            <div v-html="content" v-highlight></div>
-        </div>
-        <div id="hash">
-            <messageInput @comment="comment" :rows="rows" :aiteName="aiteName" @tagClose="tagClose" v-if="important"></messageInput>
-            <div v-else class="block">
-                <router-link to="{name:'/login'}">登录</router-link>或<router-link to="{name:'/login'}">注册</router-link> 发表评论
+        <Header :like="important&&true" :isLike="detail.isLike" @like="likeChange"></Header>
+        <el-backtop></el-backtop>
+        <div class="detail">
+            <h1 class="title">{{detail.title}}</h1>
+            <div class="status flex align-center">
+                <span>{{detail.month}} {{detail.day}}, {{detail.year}}</span>
+                <span>阅读：{{detail.visitsNum}}</span>
+                <span>字数：{{detail.textLen}}</span>
+                <span>评论：{{commentList.total}}</span>
+                <span>喜欢: {{detail.likeNum}}</span>
             </div>
-            <messageList @reply="reply" :lists="commentList" :isLoading="isLoading" :isNext="isNext"></messageList>
+            <div class="content markdown-body">
+                <div v-html="content" v-highlight></div>
+            </div>
+            <div id="hash">
+                <messageInput @comment="comment" :rows="rows" :aiteName="aiteName" @tagClose="tagClose" v-if="important"></messageInput>
+                <div v-else class="block">
+                    <router-link to="{name:'/login'}">登录</router-link>或<router-link to="{name:'/login'}">注册</router-link> 发表评论
+                </div>
+                <messageList @reply="reply" :lists="commentList" :isLoading="isLoading" :isNext="isNext"></messageList>
+            </div>
         </div>
     </div>
-</div>
   </div>
 </template>
 
@@ -69,7 +69,7 @@ export default {
          this.getComData()         
          bottomHandle(this.isNext,()=>{
               this.isLoading = true
-              this.page.pageNum += 1
+              this.page.pageSize += 10
               this.getComData()
          })
     },
@@ -105,10 +105,11 @@ export default {
             this.detail = data
         },
         async comment(content){
+            this.aiteName === ''?content:content=`@${this.aiteName} ${content}`  //父楼层不加@
             const data = {
                 articleId:this.id,
                 userId:JSON.parse(localStorage.getItem('userInfo')).id,
-                content:`@${this.aiteName} ${content}`
+                content
             }
             this.floorId && (data.floorId = this.floorId)
             try {
@@ -132,6 +133,20 @@ export default {
             const result = await list(data)
             const { len, total } = result.data.data
             setTimeout(() => {
+                result.data.data.datas.forEach((item)=>{
+                    if(item.children.length <= 1) {
+                        item.showColl = false
+                    }else {
+                        item.showColl = true
+                    }
+                    item.children.forEach((comm,index)=>{
+                        if(index === 0) {
+                            comm.isCollapse = false
+                        }else {
+                            comm.isCollapse = true
+                        }
+                    })
+                })
                 this.commentList = result.data.data
                 this.len += len
                 this.isNext = this.len < total
@@ -168,7 +183,7 @@ export default {
       transparent 10%
     ),
     linear-gradient(#eef1f4 10%, transparent 10%);
-    height: 100vh;
+    
 }
     .detail {
         width: 800px;

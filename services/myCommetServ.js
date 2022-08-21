@@ -29,7 +29,7 @@ exports.getMyCommentList = async function (page = 1, limit = 10) {
 }
 
 exports.addComment = async (commentInfo,ctx)=>{
-    const isAllow = limitComment(ctx,2,3) //2分钟不超过3条留言
+    const isAllow = limitComment(ctx,2,3) //3分钟不超过2条留言
     if(isAllow){
          const result = await myWord.create(commentInfo)
          return result.toJSON()

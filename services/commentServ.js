@@ -44,7 +44,7 @@ function handleCommentList(datas){
 }
 
 exports.addComment = async(commentInfo,ctx)=>{
-      const isAllow = limitComment(ctx,1,3)
+      const isAllow = limitComment(ctx,20,1)
       if(isAllow){
         const result = await ArticleWord.create(commentInfo)
         return result.toJSON()

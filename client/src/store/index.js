@@ -1,9 +1,11 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate"
 import { list } from "@/api/article"
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+    plugins: [createPersistedState()],  //Vuex中的数据通常会在页面刷新或关闭，重置 使用插件将数据保存到localstorage
     state:{
         isToken:!!localStorage.getItem('token'), //有没有token，！！是为了把得到的值强制转换为布尔值
         showPageLoadScrollBar:false,
